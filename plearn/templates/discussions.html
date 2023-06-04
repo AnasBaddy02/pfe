@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo/favicon.ico' %}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/boxicons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <div class="layout-menu-toggle navbar-nav me-xl-0 d-xl-none bg-white sticky-top">
+    <div class="row align-items-center">
+      <div class="col-6 ps-3 pt-2">
+        <a href="{% url 'indexAlt' %}" class="nav-item nav-link app-brand-link my-2 ms-2">
+          <img src="{% static 'assets/img/logo/LearnC.png' %}"
+            style="max-width: 50%; max-height: 50%; object-fit: contain;">
+        </a>
+      </div>
+      <div class="col-6 text-end">
+        <a class="nav-item nav-link px-0" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm" height="50px" width="50px"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar layout-without-navbar">
+
+        <!-- Layout container -->
+        <div class="layout-container">
+
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="{% url 'indexAlt' %}" class="app-brand-link">
+                        <img src="{% static 'assets/img/logo/LearnC.png' %}" alt="" class="p-5"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1 mt-3">
+                    <!-- Dashboard -->
+                    <li class="menu-item active">
+                        <a href="{% url 'dashboard' %}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+
+                    <!-- Components -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+                    <!-- Sections -->
+                    {% for section in sections %}
+                    <li class="menu-item">
+                        <a href="{% url 'index' section.id %}" class="menu-link">
+                            <div data-i18n="Basic">{{ section.name }}</div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                    <!-- User interface -->
+
+                </ul>
+                <div class="menu-divider mb-0"></div>
+                <ul class="m-0 p-0">
+                    <li class="menu-block my-1 d-flex flex-row justify-content-end">
+                        {% if user.is_authenticated and not user.is_superuser %}
+                        <a class="fold-show" title="Logout" data-bs-placement="top" data-bs-toggle="tooltip"
+                            href="{% url 'logout' %}"><span aria-hidden="true" class="text-body bx bx-log-out"></span>
+                        </a>
+                        {% else %}
+                        <a class="fold-show me-3" title="Signup" data-bs-placement="top" data-bs-toggle="tooltip"
+                            href="{% url 'signup' %}"><span aria-hidden="true" class="text-body bx bx-user-plus"></span>
+                        </a>
+                        <a class="fold-show" title="Login" data-bs-placement="top" data-bs-toggle="tooltip"
+                            href="{% url 'signin' %}"><span aria-hidden="true" class="text-body bx bx-log-in"></span>
+                        </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </aside>
+            <!--/ Menu -->
+
+            <!-- Layout page -->
+            <div class="layout-page">
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-style1">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a>{{ sectionName }} Discussions</a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <a href="{% url 'index' sectionId %}">Go to this section. ({{ sectionName }})</a>
+                        <div class="divider text-start-center">
+                            <div class="divider-text"><span class="h4">Discussions</span></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Learner</th>
+                                        <th class="text-center">Message</th>
+                                        <th class="text-center">Number of Replies</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for discussion in discussions %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ discussion.learner.username }}</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <strong>{{ discussion.message }}</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            {{ discussion.NumberOfReplies }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ discussion.date }}
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#replyModal">
+                                                Reply</i>
+                                            </button>
+                                            <button type="button" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#modal{{ discussion.id }}">
+                                                <i class='bx bx-trash' style='color:#ff0000'></i>
+                                            </button>
+                                            <div class="modal fade" id="modal{{ discussion.id }}" tabindex="-1" aria-labelledby="modal"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                message</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body text-start">
+                                                            Are you sure you want to delete this message ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form action="" method="POST">
+                                                                {% csrf_token %}
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                    <input type="text" class="d-none"></input>
+                                                                <button type="submit" class="btn btn-primary" name="deleteDiscussionButton" value="{{ discussion.id }}">Confirm</button>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="replyModal" tabindex="-1"
+                                                aria-labelledby="modal" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <strong>
+                                                                <h5 class="modal-title" id="exampleModalLabel">Reply
+                                                                </h5>
+                                                            </strong>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                            </button>
+                                                        </div>
+                                                        <form action="" method="POST" class="needs-validation"
+                                                            novalidate>
+                                                            {% csrf_token %}
+                                                            <div class="modal-body text-start">
+                                                                {% if user in discussion.getRepliedUsers %}
+                                                                <div class="alert alert-success" role="alert">
+                                                                    You have already replied to this message. You can
+                                                                    add another!
+                                                                </div>
+                                                                {% endif %}
+                                                                <p>Message :<br>{{ discussion.message }}</p>
+                                                                <p>
+                                                                    <label for="reply" class="mb-1">Your reply :</label>
+                                                                    <textarea class="form-control" name="reply{{ discussion.id }}" rows="3"
+                                                                        required></textarea>
+
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" name="addReplyButton"
+                                                                    class="btn btn-primary" value="{{ discussion.id }}">Confirm</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/ Content -->
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme text-center">
+                        Created by Anas Baddy for LearnC
+                    </footer>
+                    <!--/ Footer -->
+
+                    <!-- Content area backdrop -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!--/ Content wrapper -->
+
+            </div>
+            <!--/ Layout page -->
+
+        </div>
+        <!--/ Layout container -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+    </div>
+    <!--/ Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+
+</html>

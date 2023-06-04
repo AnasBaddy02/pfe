@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo/favicon.ico' %}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/boxicons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="layout-menu-toggle navbar-nav me-xl-0 d-xl-none bg-white sticky-top">
+        <div class="row align-items-center">
+            <div class="col-6 ps-3 pt-2">
+                <a href="{% url 'indexAlt' %}" class="nav-item nav-link app-brand-link my-2 ms-2">
+                    <img src="{% static 'assets/img/logo/LearnC.png' %}"
+                        style="max-width: 50%; max-height: 50%; object-fit: contain;">
+                </a>
+            </div>
+            <div class="col-6 text-end">
+                <a class="nav-item nav-link px-0" href="javascript:void(0)">
+                    <i class="bx bx-menu bx-sm" height="50px" width="50px"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar layout-without-navbar">
+
+        <!-- Layout container -->
+        <div class="layout-container">
+
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="{% url 'indexAlt' %}" class="app-brand-link">
+                        <img src="{% static 'assets/img/logo/LearnC.png' %}" alt="" class="p-5"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1 mt-3">
+                    <!-- Dashboard -->
+                    <li class="menu-item active">
+                        <a href="{% url 'dashboard' %}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+
+                    <!-- Components -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+                    <!-- Cards -->
+                    {% for section in sections %}
+                    <!-- Cards -->
+                    <li class="menu-item">
+                        <a href="{% url 'index' section.id %}" class="menu-link">
+                            <div data-i18n="Basic">{{ section.name }}</div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                    <!-- User interface -->
+
+                </ul>
+                <div class="menu-divider mb-0"></div>
+                <ul class="m-0 p-0">
+                    <li class="menu-block my-1 d-flex flex-row justify-content-end">
+                        {% if user.is_authenticated %}
+                        <div class="row w-100 me-1">
+                            <div class="col-10">
+                                <p><strong>{{ user.username }}</strong> is connected</p>
+                            </div>
+                            <div class="col-2">
+                                <a class="fold-show" title="Logout" data-bs-placement="top" data-bs-toggle="tooltip"
+                                    href="{% url 'logout' %}"><span aria-hidden="true"
+                                        class="text-body bx bx-log-out"></span>
+                                </a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="fold-show me-3" title="Signup" data-bs-placement="top" data-bs-toggle="tooltip"
+                            href="{% url 'signup' %}"><span aria-hidden="true" class="text-body bx bx-user-plus"></span>
+                        </a>
+                        <a class="fold-show" title="Login" data-bs-placement="top" data-bs-toggle="tooltip"
+                            href="{% url 'signin' %}"><span aria-hidden="true" class="text-body bx bx-log-in"></span>
+                        </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </aside>
+            <!--/ Menu -->
+
+            <!-- Layout page -->
+            <div class="layout-page">
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-style1">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a>Edit section</a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <form action="" method="POST" class="p-5" id="editForm">
+                            {% csrf_token %}
+                            {% if not_valid %}
+                            <div class="alert alert-danger" role="alert">
+                                Your section hasn't been changed. Please fill out the form correctly!
+                            </div>
+                            {% endif %}
+                            <div class="alert alert-danger d-none" role="alert" id="errorMessage">
+                                Please fill out the form correctly!
+                            </div>
+                            {{ form.media }}
+                            {{ form.as_p }}
+                            <div class="text-end mt-2">
+                                <button type="button" class="btn btn-danger me-3" id="deleteButton"
+                                    data-bs-toggle="modal" data-bs-target="#modal">Delete</button>
+                                <button type="button" class="btn btn-primary" id="editButton" data-bs-toggle="modal"
+                                    data-bs-target="#modal">Submit</button>
+                                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabel"></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body mb-0">
+                                                <div class="text-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                                        viewBox="0 0 24 24" id="deleteIcon"
+                                                        style="fill: rgba(255, 0, 0, 1);">
+                                                        <path
+                                                            d="M9.172 16.242 12 13.414l2.828 2.828 1.414-1.414L13.414 12l2.828-2.828-1.414-1.414L12 10.586 9.172 7.758 7.758 9.172 10.586 12l-2.828 2.828z">
+                                                        </path>
+                                                        <path
+                                                            d="M12 22c5.514 0 10-4.486 10-10S17.514 2 12 2 2 6.486 2 12s4.486 10 10 10zm0-18c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                                        viewBox="0 0 24 24" id="updateIcon"
+                                                        style="fill: rgba(136, 137, 195, 1);">
+                                                        <path d="M11 16h2V7h3l-4-5-4 5h3z"></path>
+                                                        <path
+                                                            d="M5 22h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                                <p id="modalMessage" class="text-start mt-2"></p>
+                                            </div>
+                                            <div class="modal-footer mt-0">
+                                                <button type="button" id="modalCloseButton" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="submitButton"
+                                                    value="1">Confirm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--/ Content -->
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme text-center">
+                        Created by Anas Baddy for LearnC
+                    </footer>
+                    <!--/ Footer -->
+
+
+                    <!-- Content area backdrop -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!--/ Content wrapper -->
+
+            </div>
+            <!--/ Layout page -->
+
+        </div>
+        <!--/ Layout container -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+    </div>
+    <!--/ Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#editButton").click(function (e) {
+                $("#modalLabel").html("Edit section");
+                $("#modalMessage").html("Are you sure you want to edit this section ?");
+                $("#deleteIcon").addClass("d-none");
+                $("#updateIcon").removeClass("d-none");
+                $("#submitButton").attr("name", "editButton");
+            });
+            $("#deleteButton").click(function (e) {
+                $("#modalLabel").html("Delete section");
+                $("#modalMessage").html("Are you sure you want to delete this section ?");
+                $("#updateIcon").addClass("d-none");
+                $("#deleteIcon").removeClass("d-none");
+                $("#submitButton").attr("name", "deleteButton");
+            });
+            $("#submitButton").on("click", function (e) {
+                $("#modalCloseButton").click();
+                $("#errorMessage").removeClass("d-none");
+            });
+        });
+    </script>
+</body>
+
+</html>
