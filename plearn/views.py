@@ -91,14 +91,10 @@ def logout_user(request):
 def create_section(request):
     if request.user and request.user.is_active and not request.user.is_superuser and request.user.groups.all().first().name == 'editors':
         if request.method == "POST":
-            form = CreateSection(request.POST)
+            form = CreateSection(request.POST, request.FILES or None)
             notValid = False
             if form.is_valid():
-                section = Section()
-                section.name = request.POST.get('name')
-                section.content = request.POST.get('content')
-                section.video = request.POST.get('video') 
-                section.save()
+                form.save()
                 return redirect('dashboard')
             else:
                 form = CreateSection()
@@ -125,7 +121,7 @@ def edit_section(request, id):
     if request.user and request.user.is_active and not request.user.is_superuser and request.user.groups.all().first().name == 'editors':
         if request.method == "POST":
             if request.POST.get('editButton'):
-                form = EditSection(request.POST)
+                form = EditSection(request.POST, request.FILES or None)
                 notValid = False
                 if form.is_valid():
                     Section.objects.filter(id = id).update(

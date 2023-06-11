@@ -7,7 +7,7 @@ from ckeditor.fields import RichTextField
 class Section(models.Model):
     name = models.CharField(max_length=255, null=True)
     content = RichTextField(blank=True, null=True)
-    video = models.CharField(max_length=999, null=True)
+    video = models.FileField(upload_to='videos/', null=True, blank=True, verbose_name="")
 
     def __str__(self):
         return f"{self.name}"

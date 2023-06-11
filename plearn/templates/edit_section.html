@@ -153,7 +153,7 @@
                                 </li>
                             </ol>
                         </nav>
-                        <form action="" method="POST" class="p-5" id="editForm">
+                        <form action="" method="POST" enctype="multipart/form-data" class="p-5" id="editForm">
                             {% csrf_token %}
                             {% if not_valid %}
                             <div class="alert alert-danger" role="alert">

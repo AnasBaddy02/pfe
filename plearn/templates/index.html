@@ -120,11 +120,12 @@
               </div>
             </div>
             {% else %}
-            <a class="fold-show me-3" title="Signup" data-bs-placement="top" data-bs-toggle="tooltip"
-              href="{% url 'signup' %}"><span aria-hidden="true" class="text-body bx bx-user-plus"></span>
+            <a class="fold-show me-3 rounded p-1" style="background: #9294f8;" title="Signup" data-bs-placement="top"
+              data-bs-toggle="tooltip" href="{% url 'signup' %}"><i class='bx bxs-user-plus' style='color:#ffffff'></i>
             </a>
-            <a class="fold-show" title="Login" data-bs-placement="top" data-bs-toggle="tooltip"
-              href="{% url 'signin' %}"><span aria-hidden="true" class="text-body bx bx-log-in"></span>
+            <a class="fold-show rounded p-1" style="background: #9294f8;" title="Login" data-bs-placement="top"
+              data-bs-toggle="tooltip" href="{% url 'signin' %}"><span><i class='bx bxs-log-out'
+                  style='color:#ffffff'></i></span>
             </a>
             {% endif %}
           </li>
@@ -151,11 +152,13 @@
                     data-bs-target="#navs-top-documentation" aria-controls="navs-top-home"
                     aria-selected="true">Documentation</button>
                 </li>
+                {% if current.video %}
                 <li class="nav-item">
                   <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                     data-bs-target="#navs-top-video" aria-controls="navs-top-profile"
                     aria-selected="false">Video</button>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                   <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                     data-bs-target="#navs-top-discussion" aria-controls="navs-top-messages"
@@ -168,12 +171,16 @@
                     {{ current.content|safe }}
                   </p>
                 </div>
+                {% if current.video %}
                 <div class="tab-pane fade text-center my-1 mx-3" id="navs-top-video" role="tabpanel">
                   <p>
-                    <iframe style="width: 80%; height: 30em;" src="{{ current.video }}" allowfullscreen></iframe>
-
+                    <video width='100%' controls>
+                      <source src='{{ MEDIA_URL }}{{ current.video }}' type='video/mp4'>
+                      Your browser does not support the video tag.
+                    </video>
                   </p>
                 </div>
+                {% endif %}
                 <div class="tab-pane fade" id="navs-top-discussion" role="tabpanel">
                   {% if user.groups.all.first.name == 'learners' %}
                   <div class="mb-2">
@@ -298,14 +305,16 @@
     $(document).ready(function () {
       url = window.location.href.toString();
       url = url.split("").reverse("").join("");
-      id = "#s";
+      id = "";
       for (let i = 0; i < url.length; i++) {
         if (url[i] == '/') {
           break;
         }
         id += url[i];
       }
-      // console.log(id);
+      id += "s#";
+      id = id.split("").reverse("").join("");
+      console.log(id);
       $("" + id).addClass("active");
     });
     (function () {
